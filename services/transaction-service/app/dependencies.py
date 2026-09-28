@@ -38,10 +38,3 @@ def get_current_user(
 
 DbSession = Annotated[AsyncSession, Depends(get_db)]
 UserDep = Annotated[CurrentUser, Depends(get_current_user)]
-
-def require_transaction_service(user: UserDep) -> CurrentUser:
-    if user.azp != "transaction-service":
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Internal endpoint")
-    return user
-
-ServiceDep = Annotated[CurrentUser, Depends(require_transaction_service)]

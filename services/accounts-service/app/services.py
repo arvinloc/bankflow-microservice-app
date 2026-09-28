@@ -5,7 +5,8 @@ from decimal import Decimal
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from .models import Account
+from .models import Account, LedgerEntry
+
 
 class AccountNotFound(Exception):
     pass
@@ -46,3 +47,53 @@ async def deposit(db: AsyncSession, account_id: uuid.UUID, owner_id: uuid.UUID, 
     await db.commit()
     await db.refresh(account)
     return account
+
+
+class TransferError(Exception):
+    def __init__(self, code: str):
+        self.code = code
+
+
+async def apply_transfer(
+    db: AsyncSession, *, transaction_id: uuid.UUID, user_id: uuid.UUID,
+    from_account_id: uuid.UUID, to_account_number: str, amount: Decimal, currency: str,
+) -> None:
+    recipient_id = await db.scalar(select(Account.id).where(Account.number == to_account_number))
+    if recipient_id is None:
+        raise TransferError("RECIPIENT_NOT_FOUND")
+    if recipient_id == from_account_id:
+        raise TransferError("SAME_ACCOUNT")
+
+    # Блокируем ОБА счёта в одном порядке (по id). Иначе два встречных перевода
+    # A→B и B→A могут заблокировать друг друга (deadlock).
+    rows = await db.scalars(
+        select(Account)
+        .where(Account.id.in_([from_account_id, recipient_id]))
+        .order_by(Account.id)
+        .with_for_update()
+    )
+    accounts = {a.id: a for a in rows}
+    sender = accounts.get(from_account_id)
+    if sender is None or sender.owner_id != user_id:
+        raise TransferError("ACCOUNT_NOT_FOUND")
+    recipient = accounts[recipient_id]
+
+    # Идемпотентность: проверяем ПОСЛЕ блокировки, чтобы параллельные дубли не проскочили
+    already = await db.scalar(
+        select(LedgerEntry.id).where(LedgerEntry.transaction_id == transaction_id).limit(1)
+    )
+    if already:
+        return
+
+    if sender.currency != currency or recipient.currency != currency:
+        raise TransferError("CURRENCY_MISMATCH")
+    if sender.balance < amount:
+        raise TransferError("INSUFFICIENT_FUNDS")
+
+    sender.balance -= amount
+    recipient.balance += amount
+    db.add_all([
+        LedgerEntry(account_id=sender.id, transaction_id=transaction_id, amount=-amount),
+        LedgerEntry(account_id=recipient.id, transaction_id=transaction_id, amount=amount),
+    ])
+    await db.commit()  # дебет, кредит и журнал: всё или ничего

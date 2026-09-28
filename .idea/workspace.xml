@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="e85eed3b-c9ea-4bf0-b657-317cfc1ee154" name="Changes" comment="" />
+    <list default="true" id="e85eed3b-c9ea-4bf0-b657-317cfc1ee154" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/services/accounts-service/app/dependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts-service/app/dependencies.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts-service/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts-service/app/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts-service/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts-service/app/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts-service/app/security.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts-service/app/security.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/accounts-service/app/services.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/accounts-service/app/services.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 6
@@ -20,10 +42,23 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/home/arvinloc/PycharmProjects/bankflow-microservice/services/transaction-service/app",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PythonContentEntriesConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/services/transaction-service/app" />
+      <recent name="$PROJECT_DIR$/services/transaction-service" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -39,7 +74,11 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1790583688534</updated>
+      <workItem from="1790583690208" duration="8295000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>
